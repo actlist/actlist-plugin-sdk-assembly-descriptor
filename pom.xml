@@ -13,7 +13,7 @@
 	</properties>
 	<distributionManagement>
 		<repository>
-			<id>maven-releases</id>
+			<id>silentsoft-maven-releases</id>
 			<url>http://nexus.silentsoft.org/repository/maven-releases</url>
 		</repository>
 	</distributionManagement>
