@@ -1,9 +1,36 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>org.silentsoft</groupId>
 	<artifactId>actlist-plugin-sdk-assembly-descriptor</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
+
+	<name>actlist-plugin-sdk-assembly-descriptor</name>
+	<description>Actlist Plugin SDK Assembly Descriptor</description>
+	<url>https://github.com/silentsoft/actlist-plugin-sdk-assembly-descriptor</url>
+
+	<scm>
+		<url>https://github.com/silentsoft/actlist-plugin-sdk-assembly-descriptor.git</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Hyesung Lee</name>
+			<email>hyesung.lee@silentsoft.org</email>
+			<url>https://github.com/silentsoft</url>
+		</developer>
+	</developers>
+
 	<properties>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -11,10 +38,53 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<distributionManagement>
-		<repository>
-			<id>silentsoft-maven-releases</id>
-			<url>http://nexus.silentsoft.org/repository/maven-releases</url>
-		</repository>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 </project>
